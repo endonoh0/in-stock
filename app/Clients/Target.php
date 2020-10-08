@@ -6,7 +6,7 @@ use App\Models\Stock;
 
 class Target implements Client
 {
-    public function checkAvailability(Stock $stock)
+    public function checkAvailability(Stock $stock): StockStatus
     {
     }
 }

@@ -5,10 +5,15 @@ namespace App\Clients;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Http;
 
-class BestBuy implements Client
+class BestBuy implements Clients
 {
-    public function CheckAvailability(Stock $stock)
+    public function CheckAvailability(Stock $stock): StockStatus
     {
-        return Http::get('http://foo.test')->json();
+        $results = Http::get('http://foo.test')->json();
+
+        return new StockStatus(
+            $results['available'],
+            $results['price']
+        );
     }
 }

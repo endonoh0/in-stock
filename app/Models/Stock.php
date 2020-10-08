@@ -19,16 +19,16 @@ class Stock extends Model
     public function track()
     {
         if ($this->retailer->name === 'Best Buy') {
-            $results = (new BestBuy())->checkAvailability($this);
+            $status = (new BestBuy())->checkAvailability($this);
         }
 
         if ($this->retailer->name === 'Target') {
-            $results = (new Target())->checkAvailability($this);
+            $status = (new Target())->checkAvailability($this);
         }
 
         $this->update([
-                'in_stock' => $results['available'],
-                'price' => $results['price']
+                'in_stock' => $status->available,
+                'price' => $status->price
             ]);
     }
 

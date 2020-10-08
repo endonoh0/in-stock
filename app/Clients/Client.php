@@ -6,5 +6,5 @@ use App\Models\Stock;
 
 interface Client
 {
-    public function checkAvailability(Stock $stock);
+    public function checkAvailability(Stock $stock): StockStatus;
 }
