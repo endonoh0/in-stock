@@ -5,7 +5,7 @@ namespace App\Clients;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Http;
 
-class BestBuy
+class BestBuy implements Client
 {
     public function CheckAvailability(Stock $stock)
     {

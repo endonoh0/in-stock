@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Clients\BestBuy;
+use App\Clients\Target;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -19,6 +20,10 @@ class Stock extends Model
     {
         if ($this->retailer->name === 'Best Buy') {
             $results = (new BestBuy())->checkAvailability($this);
+        }
+
+        if ($this->retailer->name === 'Target') {
+            $results = (new Target())->checkAvailability($this);
         }
 
         $this->update([
