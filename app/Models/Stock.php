@@ -18,20 +18,22 @@ class Stock extends Model
     public function track()
     {
         if ($this->retailer->name === 'Best Buy') {
-            // Hit an API endpoint for the associated retailer
-            // fetch the up-to-date details for the item
-            $results = Http::get('http://foo.test')->json();
+            $results = $this->checkAvailability();
+        }
 
-            // and then refresh the current stock record
-            $this->update([
+        $this->update([
                 'in_stock' => $results['available'],
                 'price' => $results['price']
             ]);
-        }
     }
 
     public function retailer()
     {
         return $this->belongsTo(Retailer::class);
+    }
+
+    public function checkAvailability()
+    {
+        return Http::get('http://foo.test')->json();
     }
 }
