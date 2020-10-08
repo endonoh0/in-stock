@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\Stock;
 use App\Models\Product;
 use App\Models\Retailer;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TrackCommandTest extends TestCase
@@ -31,6 +32,13 @@ class TrackCommandTest extends TestCase
         $bestBuy->addStock($switch, $stock);
 
         $this->assertFalse($stock->fresh()->in_stock);
+
+        Http::fake(function () {
+            return [
+                'available' => true,
+                'price' => 29900
+            ];
+        });
 
         $this->artisan('track');
 
