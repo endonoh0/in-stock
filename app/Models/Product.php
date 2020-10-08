@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -11,6 +11,11 @@ class Product extends Model
 
     public function inStock()
     {
-        return false;
+        return $this->stock()->where('in_stock', true)->exists();
+    }
+
+    public function stock()
+    {
+        return $this->hasMany(Stock::class);
     }
 }

@@ -15,6 +15,12 @@ class CreateStockTable extends Migration
     {
         Schema::create('stock', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('retailer_id')->constrained()->cascadeOnDelete();
+            $table->unsignedInteger('price');
+            $table->string('sku')->nullable();
+            $table->string('url');
+            $table->boolean('in_stock');
             $table->timestamps();
         });
     }
