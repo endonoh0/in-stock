@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Product;
 use App\Clients\StockStatus;
+use App\Notifications\StockUpdate;
 use Facades\App\Clients\ClientFactory;
 use Illuminate\Support\Facades\Notification;
 use Database\Seeders\RetailerWithProductSeeder;
@@ -31,7 +32,7 @@ class TrackCommandTest extends TestCase
     }
 
     /** @test */
-    public function it_notifies_the_user_when_the_stock_changes_in_a_notable_way()
+    public function it_notifies_the_user_when_the_stock_is_now_available()
     {
         Notification::fake();
 
