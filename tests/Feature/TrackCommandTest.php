@@ -32,6 +32,23 @@ class TrackCommandTest extends TestCase
     }
 
     /** @test */
+    public function it_does_not_notify_when_the_stock_remains_unavailable()
+    {
+        Notification::fake();
+
+        $user = User::factory()->create(['email' => 'user@example.com']);
+
+        $this->seed(RetailerWithProductSeeder::class);
+
+        ClientFactory::shouldReceive('make->checkAvailability')
+            ->andReturn(new StockStatus($available = false, $price = 29900));
+
+        $this->artisan('track');
+
+        Notification::assertNothingSent($user, StockUpdate::class);
+    }
+
+    /** @test */
     public function it_notifies_the_user_when_the_stock_is_now_available()
     {
         Notification::fake();
