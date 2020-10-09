@@ -24,6 +24,13 @@ class Stock extends Model
                 'in_stock' => $status->available,
                 'price' => $status->price
             ]);
+
+        History::create([
+            'price' => $this->price,
+            'in_stock' => $this->in_stock,
+            'product_id' => $this->product_id,
+            'stock_id' => $this->id
+        ]);
     }
 
     public function retailer()
