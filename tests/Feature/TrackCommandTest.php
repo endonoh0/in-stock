@@ -36,8 +36,6 @@ class TrackCommandTest extends TestCase
     {
         Notification::fake();
 
-        $user = User::factory()->create(['email' => 'user@example.com']);
-
         $this->seed(RetailerWithProductSeeder::class);
 
         ClientFactory::shouldReceive('make->checkAvailability')
@@ -45,15 +43,13 @@ class TrackCommandTest extends TestCase
 
         $this->artisan('track');
 
-        Notification::assertNothingSent($user, StockUpdate::class);
+        Notification::assertNothingSent(User::first(), StockUpdate::class);
     }
 
     /** @test */
     public function it_notifies_the_user_when_the_stock_is_now_available()
     {
         Notification::fake();
-
-        $user = User::factory()->create(['email' => 'user@example.com']);
 
         $this->seed(RetailerWithProductSeeder::class);
 
@@ -62,6 +58,6 @@ class TrackCommandTest extends TestCase
 
         $this->artisan('track');
 
-        Notification::assertSentTo($user, StockUpdate::class);
+        Notification::assertSentTo(User::first(), StockUpdate::class);
     }
 }

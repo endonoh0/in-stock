@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\Stock;
 use App\Models\Product;
 use App\Models\Retailer;
@@ -26,5 +27,7 @@ class RetailerWithProductSeeder extends Seeder
             'sku' => '12345',
             'in_stock' => false
         ]));
+
+        User::factory()->create(['email' => 'user@example.com']);
     }
 }
