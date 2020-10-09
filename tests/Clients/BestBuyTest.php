@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Stock;
 use App\Clients\BestBuy;
+use Illuminate\Support\Facades\Http;
 use Database\Seeders\RetailerWithProductSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -32,5 +33,16 @@ class BestBuyTest extends TestCase
         }
 
         $this->assertTrue(true);
+    }
+
+    /** @test */
+    public function it_creates_the_proper_stock_status_response()
+    {
+        Http::fake(fn () => ['salePrice' => 499.99, 'onlineAvailability' => true]);
+
+        $stockStatus = (new BestBuy())->checkAvailability(new Stock);
+
+        $this->assertEquals(49999, $stockStatus->price);
+        $this->assertTrue($stockStatus->available);
     }
 }
